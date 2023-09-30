@@ -17,6 +17,13 @@ async function addNote(title) {
   console.log(chalk.bgRed("Note was added!"));
 }
 
+async function removeNote(id) {
+  const notes = await getNotes();
+  const newNotes = notes.filter((note) => note.id !== id);
+
+  await fs.writeFile(notesPath, JSON.stringify(newNotes));
+  console.log(chalk.bgRed("Note was deleted!"));
+}
 async function getNotes() {
   const notes = await fs.readFile(notesPath, { encoding: "utf-8" });
   return Array.isArray(JSON.parse(notes)) ? JSON.parse(notes) : [];
@@ -26,11 +33,12 @@ async function printNotes() {
   const notes = await getNotes();
   console.log(chalk.bgBlue("Here is a list of notes:"));
   notes.forEach((note) => {
-    console.log(chalk.blue(note.title));
+    console.log(chalk.blue(`${note.id} ${note.title}`));
   });
 }
 
 module.exports = {
+  removeNote,
   addNote,
   printNotes,
 };
