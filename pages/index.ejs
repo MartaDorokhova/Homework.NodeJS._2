@@ -25,9 +25,9 @@
             <ul class="list-group">
                 <% for (let i =0; i < notes.length; i++) {%>
                 <li class="list-group-item d-flex justify-content-between align-content-center">
-                    <%= notes[i].title %>
-                 <div> <button class="btn btn-primary" data-type="patch" data-id="<%= notes[i].id %>" >Редактировать</button> 
-                   <button class="btn btn-danger" data-type="remove" data-id="<%= notes[i].id %>">&times</button> </div>
+                  <span class="item">  <%= notes[i].title %></span>
+                 <div> <button class="btn btn-primary" data-type="put" data-id="<%= notes[i].id %>" >Редактировать</button> 
+                   <button class="btn btn-danger" data-type="remove" data-id="<%= notes[i].id %>">&times;</button> </div>
                 </li>
                 <% } %>
             </ul>

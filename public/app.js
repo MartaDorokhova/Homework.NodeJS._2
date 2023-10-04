@@ -6,12 +6,12 @@ document.addEventListener("click", (event) => {
     });
   }
 
-  if (event.target.dataset.type === "patch") {
+  if (event.target.dataset.type === "put") {
     const id = event.target.dataset.id;
-    console.log(id);
-    // patch(id).then(() => {
-    //   event.target.closest("li").patch();
-    // });
+    newTitle = prompt("Введите новое название");
+    put(id, newTitle).then(() => {
+      event.target.closest("li").querySelector(".item").innerHTML = newTitle;
+    });
   }
 });
 
@@ -21,10 +21,9 @@ async function remove(id) {
   });
 }
 
-async function patch(id) {
-  const newTitle = event.target.value;
+async function put(id, newTitle) {
   await fetch(`/${id}`, {
-    method: "PATCH",
+    method: "PUT",
     body: JSON.stringify({
       title: `${newTitle}`,
     }),

@@ -13,32 +13,43 @@ async function addNote(title) {
 
   notes.push(note);
 
-  await fs.writeFile(notesPath, JSON.stringify(notes));
-  console.log(chalk.bgRed("Note was added!"));
+  await saveNotes(notes);
+  console.log(chalk.bgGreen("Note was added!"));
 }
 
-async function removeNote(id) {
-  const notes = await getNotes();
-  const newNotes = notes.filter((note) => note.id !== id);
-
-  await fs.writeFile(notesPath, JSON.stringify(newNotes));
-  console.log(chalk.bgRed("Note was deleted!"));
-}
 async function getNotes() {
   const notes = await fs.readFile(notesPath, { encoding: "utf-8" });
   return Array.isArray(JSON.parse(notes)) ? JSON.parse(notes) : [];
 }
 
-async function printNotes() {
+async function saveNotes(notes) {
+  await fs.writeFile(notesPath, JSON.stringify(notes));
+}
+
+async function removeNote(id) {
   const notes = await getNotes();
-  console.log(chalk.bgBlue("Here is a list of notes:"));
-  notes.forEach((note) => {
-    console.log(chalk.blue(`${note.id} ${note.title}`));
-  });
+
+  const filtered = notes.filter((note) => note.id !== id);
+
+  await saveNotes(filtered);
+  console.log(chalk.red(`Note with id="${id}" has been removed.`));
+}
+
+async function putNote(id, newTitle) {
+  const notes = await getNotes();
+  const noteIndex = notes.findIndex((note) => note.id == id);
+  if (noteIndex !== -1) {
+    notes[noteIndex].title = newTitle;
+    await saveNotes(notes);
+    console.log(chalk.bgYellow(`Note id="${id}" was edeted!`));
+  } else {
+    console.log("Нет такой заметки");
+  }
 }
 
 module.exports = {
-  removeNote,
   addNote,
   getNotes,
+  removeNote,
+  putNote,
 };
