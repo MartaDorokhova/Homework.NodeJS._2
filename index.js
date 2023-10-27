@@ -2,14 +2,9 @@ const express = require("express");
 const chalk = require("chalk");
 const path = require("path");
 const mongoose = require("mongoose");
-const {
-  addNote,
-  getNotes,
-  removeNote,
-  updateNote,
-} = require("./notes.controller");
+const { getNotes, addTest } = require("./controllers/tests.controller");
 
-const port = 3000;
+const port = 3006;
 const app = express();
 
 app.set("view engine", "ejs");
@@ -23,10 +18,10 @@ app.use(
   })
 );
 
-app.get("/", async (req, res) => {
+app.get("/tests", async (req, res) => {
   res.render("index", {
     title: "Express App",
-    notes: await getNotes(),
+    tests: await getNotes(),
     created: false,
     error: false,
   });
@@ -34,10 +29,10 @@ app.get("/", async (req, res) => {
 
 app.post("/", async (req, res) => {
   try {
-    await addNote(req.body.title);
+    await addTest(req.body.question, req.body.answer, req.body.version);
     res.render("index", {
       title: "Express App",
-      notes: await getNotes(),
+      tests: await getNotes(),
       created: true,
       error: false,
     });
@@ -45,36 +40,16 @@ app.post("/", async (req, res) => {
     console.error("Creation error", e);
     res.render("index", {
       title: "Express App",
-      notes: await getNotes(),
+      tests: await getNotes(),
       created: false,
       error: true,
     });
   }
 });
 
-app.delete("/:id", async (req, res) => {
-  await removeNote(req.params.id);
-  res.render("index", {
-    title: "Express App",
-    notes: await getNotes(),
-    created: false,
-    error: false,
-  });
-});
-
-app.put("/:id", async (req, res) => {
-  await updateNote({ id: req.params.id, title: req.body.title });
-  res.render("index", {
-    title: "Express App",
-    notes: await getNotes(),
-    created: false,
-    error: false,
-  });
-});
-
 mongoose
   .connect(
-    "mongodb+srv://martadorohova:qweqwe123@cluster0.qteawng.mongodb.net/notes?retryWrites=true&w=majority"
+    "mongodb+srv://martadorohova:qweqwe123@cluster0.qteawng.mongodb.net/tests?retryWrites=true&w=majority"
   )
   .then(() => {
     app.listen(port, () => {

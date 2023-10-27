@@ -1,0 +1,35 @@
+<!-- Тесты
+  <% if (created) {%>
+    <div class="alert alert-success">
+      Note has been created!
+    </div>
+  <% } %>
+
+  <% if (error) {%>
+    <div class="alert alert-danger">
+      Something went wrong!
+    </div>
+  <% } %>
+
+  <div class="container">
+
+
+    <form action="/" method="post" class="mb-2">
+      <div class="form-group mb-2">
+        <input type="text" class="form-control" name="question" required>
+      </div>
+
+      <button class="btn btn-primary" type="submit">Create!</button>
+    </form>  
+    <div class="card">
+      <ul class="list-group">
+        <% for (let i = 0; i < testapps.length; i++) { %>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <!-- <span><%= tests[i].question %></span> -->
+
+          <!-- </li>
+        <% } %>
+      </ul>
+    </div>
+   
+  </div> --> -->
