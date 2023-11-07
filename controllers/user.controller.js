@@ -1,6 +1,6 @@
-const Test = require("../models/Test");
+const User = require("../models/User");
 
-function addTest(test) {
+function addUser(test) {
   return Test.create(test);
 }
 
@@ -26,8 +26,8 @@ function getTest(id) {
 }
 
 module.exports = {
-  addTest,
-  getTests,
+  addUser,
+  getUsers,
   editTest,
   deleteTest,
   getTest,

@@ -5,9 +5,7 @@ const TestSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  versions: {
-    // required: true,
-  },
+
   rightVersion: {
     type: String,
     required: true,
